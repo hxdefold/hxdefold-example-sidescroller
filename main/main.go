@@ -15,7 +15,7 @@ components {
 }
 components {
   id: "script"
-  component: "/main/main.script"
+  component: "/scripts/Main.script"
   position {
     x: 0.0
     y: 0.0
