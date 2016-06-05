@@ -11,7 +11,7 @@ class Spaceship extends defold.support.Script<SpaceshipData> {
 
     override function init(data:SpaceshipData) {
         // Let the script receive input from the player
-        Msg.post(".", "acquire_input_focus");
+        Msg.post(".", DefoldMessages.AcquireInputFocus);
         // the current speed of the space ship
         data.speed = 0;
 

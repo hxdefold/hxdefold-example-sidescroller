@@ -11,9 +11,10 @@ class Star extends defold.support.Script<{}> {
     }
 
     override function on_message<T>(_, message_id:Message<T>, message:T, sender:Url) {
-        if (message_id == hash("collision_response")) {
-            Msg.post("main#gui", "add_score", {amount: score});
-            Go.delete();
+        switch (message_id) {
+            case DefoldMessages.CollisionResponse:
+                Msg.post("main#gui", Messages.AddScore, {amount: score});
+                Go.delete();
         }
     }
 }
