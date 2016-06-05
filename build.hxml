@@ -1,5 +1,5 @@
+-lib hxdefold
 -cp src
--cp C:\Users\Korostelev\Desktop\defold\branches\26705\7454\master\haxe\defold\src
 -lua main.lua
 --macro include("", true, null, ["src"])
 --macro defold.support.ScriptMacro.use(".")
