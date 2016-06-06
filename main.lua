@@ -108,11 +108,13 @@ local function _hx_apply_self(self, f, ...)
 end
 
 local _hx_exports = _G
+_hx_exports["gui"] = _hx_exports["gui"] or _hx_empty()
 local Array = _hx_empty() local defold = {}
 defold.support = {}
 defold.support.Script = _hx_empty() local BonusStar = _hx_empty() local Date = _hx_empty() local Factory = _hx_empty() local LargePlanets = _hx_empty() local Main = _hx_empty() local Math = _hx_empty() local Messages = _hx_empty() local Reflect = _hx_empty() local SmallPlanets = _hx_empty() local Spaceship = _hx_empty() local Star = _hx_empty() local String = _hx_empty() local Std = _hx_empty() local StringBuf = _hx_empty() defold._Message = {}
-defold._Message.Message_Impl_ = _hx_empty() defold.DefoldMessages = _hx_empty() local haxe = {}
-haxe.ds = {}
+defold._Message.Message_Impl_ = _hx_empty() defold.DefoldMessages = _hx_empty() defold.support.GuiScript = _hx_empty() local gui = {}
+gui.Main = _hx_empty() local haxe = {}
+haxe.Log = _hx_empty() haxe.ds = {}
 haxe.ds.ArraySort = _hx_empty() haxe.io = {}
 haxe.io.Eof = _hx_empty() local lua = {}
 lua.Boot = _hx_empty() lua.UserData = _hx_empty() lua.PairTools = _hx_empty() lua.Thread = _hx_empty() 
@@ -542,18 +544,18 @@ BonusStar.__name__ = true
 
 BonusStar.prototype = _hx_anon(
   'update', function(self,_,dt) 
-    local p = go.get_position();
+    local p = _G.go.get_position();
     p.x = (p.x) + ((BonusStar.speed) * (dt));
     if ((p.x) < (-32)) then 
-      go.delete();
+      _G.go.delete();
     end;
-    go.set_position(p);
+    _G.go.set_position(p);
   end,
   'on_message', function(self,_,message_id,message,sender) 
     if ((message_id) == (defold.DefoldMessages.CollisionResponse)) then 
       
-      msg.post("main#gui",Messages.AddScore,_hx_o({__fields__={amount=true},amount=BonusStar.score}));
-      go.delete();
+      _G.msg.post("main#gui",Messages.AddScore,_hx_o({__fields__={amount=true},amount=BonusStar.score}));
+      _G.go.delete();
     end;
   end
   ,'__class__',  BonusStar
@@ -611,13 +613,13 @@ Factory.prototype = _hx_anon(
     if ((data.timer) <= (0)) then 
       
       data.timer = (1) / (Factory.frequency);
-      local p = go.get_position();
-      p.y = vmath.lerp(_G.math.random(),Factory.min_y,Factory.max_y);
+      local p = _G.go.get_position();
+      p.y = _G.vmath.lerp(_G.math.random(),Factory.min_y,Factory.max_y);
       local component = "#star_factory";
       if ((_G.math.random()) < (Factory.bonus_prob)) then 
         component = "#bonus_factory";
       end;
-      factory.create(component,p);
+      _G.factory.create(component,p);
     end;
   end
   ,'__class__',  Factory
@@ -639,12 +641,12 @@ LargePlanets.__name__ = true
 
 LargePlanets.prototype = _hx_anon(
   'update', function(self,_,dt) 
-    local p = go.get_position();
+    local p = _G.go.get_position();
     p.x = (p.x) + ((LargePlanets.speed) * (dt));
     if ((p.x) <= (-2560)) then 
       p.x = 2560;
     end;
-    go.set_position(p);
+    _G.go.set_position(p);
   end
   ,'__class__',  LargePlanets
 )
@@ -665,8 +667,8 @@ Main.__name__ = true
 
 Main.prototype = _hx_anon(
   'init', function(self,_) 
-    msg.post("@render:",defold.DefoldMessages.ClearColor,_hx_o({__fields__={color=true},color=vmath.vector4(0.52,0.80,1,0)}));
-    msg.post(".",defold.DefoldMessages.AcquireInputFocus);
+    _G.msg.post("@render:",defold.DefoldMessages.ClearColor,_hx_o({__fields__={color=true},color=_G.vmath.vector4(0.52,0.80,1,0)}));
+    _G.msg.post(".",defold.DefoldMessages.AcquireInputFocus);
   end,
   'on_input', function(self,_,action_id,action) 
     if (((action_id) == (_G.hash("ok"))) and (action.pressed)) then 
@@ -674,7 +676,7 @@ Main.prototype = _hx_anon(
     else
       if (((action_id) == (_G.hash("profiler_toggle"))) and (action.pressed)) then 
         
-        msg.post("@system:",defold.DefoldMessages.ToggleProfile);
+        _G.msg.post("@system:",defold.DefoldMessages.ToggleProfile);
         do return true end;
       end;
     end;
@@ -732,12 +734,12 @@ SmallPlanets.__name__ = true
 
 SmallPlanets.prototype = _hx_anon(
   'update', function(self,_,dt) 
-    local p = go.get_position();
+    local p = _G.go.get_position();
     p.x = (p.x) + ((SmallPlanets.speed) * (dt));
     if ((p.x) <= (-1280)) then 
       p.x = 1280;
     end;
-    go.set_position(p);
+    _G.go.set_position(p);
   end
   ,'__class__',  SmallPlanets
 )
@@ -758,13 +760,13 @@ Spaceship.__name__ = true
 
 Spaceship.prototype = _hx_anon(
   'init', function(self,data) 
-    msg.post(".",defold.DefoldMessages.AcquireInputFocus);
+    _G.msg.post(".",defold.DefoldMessages.AcquireInputFocus);
     data.speed = 0;
-    go.set(".","euler.z",-5);
-    go.animate(".","euler.z",go.PLAYBACK_LOOP_PINGPONG,5,go.EASING_INOUTSINE,2);
+    _G.go.set(".","euler.z",-5);
+    _G.go.animate(".","euler.z",_G.go.PLAYBACK_LOOP_PINGPONG,5,_G.go.EASING_INOUTSINE,2);
   end,
   'update', function(self,data,dt) 
-    local p = go.get_position();
+    local p = _G.go.get_position();
     p.y = (p.y) + ((data.speed) * (dt));
     if ((p.y) < (Spaceship.min_y)) then 
       p.y = Spaceship.min_y;
@@ -773,7 +775,7 @@ Spaceship.prototype = _hx_anon(
         p.y = Spaceship.max_y;
       end;
     end;
-    go.set_position(p);
+    _G.go.set_position(p);
     data.speed = 0;
   end,
   'on_input', function(self,data,action_id,action) 
@@ -805,18 +807,18 @@ Star.__name__ = true
 
 Star.prototype = _hx_anon(
   'update', function(self,_,dt) 
-    local p = go.get_position();
+    local p = _G.go.get_position();
     p.x = (p.x) + ((Star.speed) * (dt));
     if ((p.x) < (-32)) then 
-      go.delete();
+      _G.go.delete();
     end;
-    go.set_position(p);
+    _G.go.set_position(p);
   end,
   'on_message', function(self,_,message_id,message,sender) 
     if ((message_id) == (defold.DefoldMessages.CollisionResponse)) then 
       
-      msg.post("main#gui",Messages.AddScore,_hx_o({__fields__={amount=true},amount=Star.score}));
-      go.delete();
+      _G.msg.post("main#gui",Messages.AddScore,_hx_o({__fields__={amount=true},amount=Star.score}));
+      _G.go.delete();
     end;
   end
   ,'__class__',  Star
@@ -1016,6 +1018,88 @@ end
 
 defold.DefoldMessages.new = {}
 defold.DefoldMessages.__name__ = true
+
+
+defold.support.GuiScript.new = function() 
+  local self = _hx_new(defold.support.GuiScript.prototype)
+  defold.support.GuiScript.super(self)
+  return self
+end
+
+defold.support.GuiScript.super = function(self) 
+end
+defold.support.GuiScript.__name__ = true
+
+defold.support.GuiScript.prototype = _hx_anon(
+  'init', function(self,self) 
+  end,
+  'final', function(self,self) 
+  end,
+  'update', function(self,self,dt) 
+  end,
+  'on_message', function(self,self,message_id,message,sender) 
+  end,
+  'on_input', function(self,self,action_id,action) 
+    do return false end
+  end,
+  'on_reload', function(self,self) 
+  end
+  ,'__class__',  defold.support.GuiScript
+)
+
+gui.Main.new = function() 
+  local self = _hx_new(gui.Main.prototype)
+  gui.Main.super(self)
+  return self
+end
+
+gui.Main.super = function(self) 
+  defold.support.GuiScript.super(self);
+end
+_hx_exports["gui"]["Main"] = gui.Main
+gui.Main.__name__ = true
+
+gui.Main.prototype = _hx_anon(
+  'init', function(self,data) 
+    data.score = 0;
+    haxe.Log.trace(_G.gui,_hx_o({__fields__={fileName=true,lineNumber=true,className=true,methodName=true},fileName="Main.hx",lineNumber=13,className="gui.Main",methodName="init"}));
+    data.score_node = _G.gui.get_node("score");
+  end,
+  'scale_down', function(self,data,node) 
+    _G.gui.animate(node,_G.gui.PROP_SCALE,_G.vmath.vector4(1.0,1.0,1.0,0),_G.gui.EASING_OUT,0.05);
+  end,
+  'on_message', function(self,data,message_id,message,sender) 
+    if ((message_id) == (Messages.AddScore)) then 
+      
+      (function() return (function() 
+      local fld = 'score';
+      local obj = data;
+      obj[fld] = (obj.score) + (message.amount);
+      return obj[fld] end)() end)();
+      _G.gui.set_text(data.score_node,Std.string(data.score));
+      _G.gui.animate(data.score_node,_G.gui.PROP_SCALE,_G.vmath.vector4(1.2,1.2,1.2,0),_G.gui.EASING_OUT,0.1,0.0,_hx_bind(self,self.scale_down));
+    end;
+  end
+  ,'__class__',  gui.Main
+)
+gui.Main.__super__ = defold.support.GuiScript
+setmetatable(gui.Main.prototype,{__index=defold.support.GuiScript.prototype})
+
+haxe.Log.new = {}
+haxe.Log.__name__ = true
+haxe.Log.trace = function(v,infos) 
+  local str = nil;
+  if ((infos) ~= (nil)) then 
+    
+    str = infos.fileName .. ":" .. infos.lineNumber .. ": " .. Std.string(v);
+    if ((infos.customParams) ~= (nil)) then 
+      str = str .. ("," .. infos.customParams:join(","));
+    end;
+  else
+    str = v;
+  end;
+  _hx_print(lua.Boot.__string_rec(str));
+end
 
 
 haxe.ds.ArraySort.new = {}
@@ -1729,4 +1813,5 @@ String.__name__ = true;
 Array.__name__ = true;
 _G.math.randomseed(_G.os.time())
 end
+_hx_bind = lua.Boot.bind
 return _G
