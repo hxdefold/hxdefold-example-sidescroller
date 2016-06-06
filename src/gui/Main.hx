@@ -10,7 +10,6 @@ private typedef Data = {
 class Main extends defold.support.GuiScript<Data> {
     override function init(data:Data) {
         data.score = 0;
-        trace(Gui);
         data.score_node = Gui.get_node("score");
     }
 
