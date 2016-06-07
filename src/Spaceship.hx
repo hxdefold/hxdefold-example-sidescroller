@@ -1,17 +1,17 @@
-import defold.support.InputAction;
+import defold.support.Script;
 
 typedef SpaceshipData = {
     var speed:Float;
 }
 
-class Spaceship extends defold.support.Script<SpaceshipData> {
+class Spaceship extends Script<SpaceshipData> {
     static var max_speed = 150;
     static var min_y = 60;
     static var max_y = 600;
 
     override function init(data:SpaceshipData) {
         // Let the script receive input from the player
-        Msg.post(".", DefoldMessages.AcquireInputFocus);
+        Msg.post(".", GoMessages.AcquireInputFocus);
         // the current speed of the space ship
         data.speed = 0;
 
@@ -31,7 +31,7 @@ class Spaceship extends defold.support.Script<SpaceshipData> {
         data.speed = 0;
     }
 
-    override function on_input(data:SpaceshipData, action_id:Hash, action:InputAction) {
+    override function on_input(data:SpaceshipData, action_id:Hash, action:ScriptOnInputAction) {
         if (action_id == hash("up"))
             data.speed = max_speed;
         else if (action_id == hash("down"))

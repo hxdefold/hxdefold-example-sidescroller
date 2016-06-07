@@ -12,7 +12,7 @@ class BonusStar extends defold.support.Script<{}> {
 
     override function on_message<T>(_, message_id:Message<T>, message:T, sender:Url) {
         switch (message_id) {
-            case DefoldMessages.CollisionResponse:
+            case PhysicsMessages.CollisionResponse:
                 Msg.post("main#gui", Messages.AddScore, {amount: score});
                 Go.delete();
         }

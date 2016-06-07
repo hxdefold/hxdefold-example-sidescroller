@@ -111,8 +111,8 @@ local _hx_exports = _G
 _hx_exports["gui"] = _hx_exports["gui"] or _hx_empty()
 local Array = _hx_empty() local defold = {}
 defold.support = {}
-defold.support.Script = _hx_empty() local BonusStar = _hx_empty() local Date = _hx_empty() local Factory = _hx_empty() local LargePlanets = _hx_empty() local Main = _hx_empty() local Math = _hx_empty() local Messages = _hx_empty() local Reflect = _hx_empty() local SmallPlanets = _hx_empty() local Spaceship = _hx_empty() local Star = _hx_empty() local String = _hx_empty() local Std = _hx_empty() local StringBuf = _hx_empty() defold._Message = {}
-defold._Message.Message_Impl_ = _hx_empty() defold.DefoldMessages = _hx_empty() defold.support.GuiScript = _hx_empty() local gui = {}
+defold.support.Script = _hx_empty() local BonusStar = _hx_empty() local Date = _hx_empty() local Factory = _hx_empty() local LargePlanets = _hx_empty() local Main = _hx_empty() local Math = _hx_empty() local Messages = _hx_empty() local Reflect = _hx_empty() local SmallPlanets = _hx_empty() local Spaceship = _hx_empty() local Star = _hx_empty() local String = _hx_empty() local Std = _hx_empty() local StringBuf = _hx_empty() defold.GoMessages = _hx_empty() defold._Message = {}
+defold._Message.Message_Impl_ = _hx_empty() defold.PhysicsMessages = _hx_empty() defold.RenderMessages = _hx_empty() defold.SysMessages = _hx_empty() defold.support.GuiScript = _hx_empty() local gui = {}
 gui.Main = _hx_empty() local haxe = {}
 haxe.ds = {}
 haxe.ds.ArraySort = _hx_empty() haxe.io = {}
@@ -552,7 +552,7 @@ BonusStar.prototype = _hx_anon(
     _G.go.set_position(p);
   end,
   'on_message', function(self,_,message_id,message,sender) 
-    if ((message_id) == (defold.DefoldMessages.CollisionResponse)) then 
+    if ((message_id) == (defold.PhysicsMessages.CollisionResponse)) then 
       
       _G.msg.post("main#gui",Messages.AddScore,_hx_o({__fields__={amount=true},amount=BonusStar.score}));
       _G.go.delete();
@@ -667,8 +667,8 @@ Main.__name__ = true
 
 Main.prototype = _hx_anon(
   'init', function(self,_) 
-    _G.msg.post("@render:",defold.DefoldMessages.ClearColor,_hx_o({__fields__={color=true},color=_G.vmath.vector4(0.52,0.80,1,0)}));
-    _G.msg.post(".",defold.DefoldMessages.AcquireInputFocus);
+    _G.msg.post("@render:",defold.RenderMessages.ClearColor,_hx_o({__fields__={color=true},color=_G.vmath.vector4(0.52,0.80,1,0)}));
+    _G.msg.post(".",defold.GoMessages.AcquireInputFocus);
   end,
   'on_input', function(self,_,action_id,action) 
     if (((action_id) == (_G.hash("ok"))) and (action.pressed)) then 
@@ -676,7 +676,7 @@ Main.prototype = _hx_anon(
     else
       if (((action_id) == (_G.hash("profiler_toggle"))) and (action.pressed)) then 
         
-        _G.msg.post("@system:",defold.DefoldMessages.ToggleProfile);
+        _G.msg.post("@system:",defold.SysMessages.ToggleProfile);
         do return true end;
       end;
     end;
@@ -760,7 +760,7 @@ Spaceship.__name__ = true
 
 Spaceship.prototype = _hx_anon(
   'init', function(self,data) 
-    _G.msg.post(".",defold.DefoldMessages.AcquireInputFocus);
+    _G.msg.post(".",defold.GoMessages.AcquireInputFocus);
     data.speed = 0;
     _G.go.set(".","euler.z",-5);
     _G.go.animate(".","euler.z",_G.go.PLAYBACK_LOOP_PINGPONG,5,_G.go.EASING_INOUTSINE,2);
@@ -815,7 +815,7 @@ Star.prototype = _hx_anon(
     _G.go.set_position(p);
   end,
   'on_message', function(self,_,message_id,message,sender) 
-    if ((message_id) == (defold.DefoldMessages.CollisionResponse)) then 
+    if ((message_id) == (defold.PhysicsMessages.CollisionResponse)) then 
       
       _G.msg.post("main#gui",Messages.AddScore,_hx_o({__fields__={amount=true},amount=Star.score}));
       _G.go.delete();
@@ -1008,6 +1008,10 @@ StringBuf.prototype = _hx_anon(
   ,'__class__',  StringBuf
 )
 
+defold.GoMessages.new = {}
+defold.GoMessages.__name__ = true
+
+
 defold._Message.Message_Impl_.new = {}
 defold._Message.Message_Impl_.__name__ = true
 defold._Message.Message_Impl_._new = function(s) 
@@ -1016,8 +1020,16 @@ defold._Message.Message_Impl_._new = function(s)
 end
 
 
-defold.DefoldMessages.new = {}
-defold.DefoldMessages.__name__ = true
+defold.PhysicsMessages.new = {}
+defold.PhysicsMessages.__name__ = true
+
+
+defold.RenderMessages.new = {}
+defold.RenderMessages.__name__ = true
+
+
+defold.SysMessages.new = {}
+defold.SysMessages.__name__ = true
 
 
 defold.support.GuiScript.new = function() 
@@ -1611,253 +1623,165 @@ Spaceship.min_y = 60
 Spaceship.max_y = 600
 Star.score = 1000
 Star.speed = -240
-defold.DefoldMessages.Exit = (function() 
+defold.GoMessages.AcquireInputFocus = (function() 
   local _hx_2
   
-  local this1 = _G.hash("exit");
+  local this1 = _G.hash("acquire_input_focus");
   
   _hx_2 = this1;
   return _hx_2
 end )()
-defold.DefoldMessages.Reboot = (function() 
+defold.GoMessages.Disable = (function() 
   local _hx_3
   
-  local this1 = _G.hash("reboot");
+  local this1 = _G.hash("disable");
   
   _hx_3 = this1;
   return _hx_3
 end )()
-defold.DefoldMessages.SetUpdateFrequency = (function() 
+defold.GoMessages.Enable = (function() 
   local _hx_4
   
-  local this1 = _G.hash("set_update_frequency");
+  local this1 = _G.hash("enable");
   
   _hx_4 = this1;
   return _hx_4
 end )()
-defold.DefoldMessages.StartRecord = (function() 
+defold.GoMessages.ReleaseInputFocus = (function() 
   local _hx_5
   
-  local this1 = _G.hash("start_record");
+  local this1 = _G.hash("release_input_focus");
   
   _hx_5 = this1;
   return _hx_5
 end )()
-defold.DefoldMessages.StopRecord = (function() 
+defold.GoMessages.SetParent = (function() 
   local _hx_6
   
-  local this1 = _G.hash("stop_record");
+  local this1 = _G.hash("set_parent");
   
   _hx_6 = this1;
   return _hx_6
 end )()
-defold.DefoldMessages.ToggleProfile = (function() 
+defold.PhysicsMessages.ApplyForce = (function() 
   local _hx_7
   
-  local this1 = _G.hash("toggle_profile");
+  local this1 = _G.hash("apply_force");
   
   _hx_7 = this1;
   return _hx_7
 end )()
-defold.DefoldMessages.AcquireInputFocus = (function() 
+defold.PhysicsMessages.CollisionResponse = (function() 
   local _hx_8
   
-  local this1 = _G.hash("acquire_input_focus");
+  local this1 = _G.hash("collision_response");
   
   _hx_8 = this1;
   return _hx_8
 end )()
-defold.DefoldMessages.Disable = (function() 
+defold.PhysicsMessages.ContactPointResponse = (function() 
   local _hx_9
   
-  local this1 = _G.hash("disable");
+  local this1 = _G.hash("contact_point_response");
   
   _hx_9 = this1;
   return _hx_9
 end )()
-defold.DefoldMessages.Enable = (function() 
+defold.PhysicsMessages.RayCastResponse = (function() 
   local _hx_10
   
-  local this1 = _G.hash("enable");
+  local this1 = _G.hash("ray_cast_response");
   
   _hx_10 = this1;
   return _hx_10
 end )()
-defold.DefoldMessages.ReleaseInputFocus = (function() 
+defold.PhysicsMessages.TriggerResponse = (function() 
   local _hx_11
   
-  local this1 = _G.hash("release_input_focus");
+  local this1 = _G.hash("trigger_response");
   
   _hx_11 = this1;
   return _hx_11
 end )()
-defold.DefoldMessages.SetParent = (function() 
+defold.RenderMessages.ClearColor = (function() 
   local _hx_12
   
-  local this1 = _G.hash("set_parent");
+  local this1 = _G.hash("clear_color");
   
   _hx_12 = this1;
   return _hx_12
 end )()
-defold.DefoldMessages.ApplyForce = (function() 
+defold.RenderMessages.DrawLine = (function() 
   local _hx_13
   
-  local this1 = _G.hash("apply_force");
+  local this1 = _G.hash("draw_line");
   
   _hx_13 = this1;
   return _hx_13
 end )()
-defold.DefoldMessages.CollisionResponse = (function() 
+defold.RenderMessages.DrawText = (function() 
   local _hx_14
   
-  local this1 = _G.hash("collision_response");
+  local this1 = _G.hash("draw_text");
   
   _hx_14 = this1;
   return _hx_14
 end )()
-defold.DefoldMessages.ContactPointResponse = (function() 
+defold.RenderMessages.WindowResized = (function() 
   local _hx_15
   
-  local this1 = _G.hash("contact_point_response");
+  local this1 = _G.hash("window_resized");
   
   _hx_15 = this1;
   return _hx_15
 end )()
-defold.DefoldMessages.RayCastResponse = (function() 
+defold.SysMessages.Exit = (function() 
   local _hx_16
   
-  local this1 = _G.hash("ray_cast_response");
+  local this1 = _G.hash("exit");
   
   _hx_16 = this1;
   return _hx_16
 end )()
-defold.DefoldMessages.TriggerResponse = (function() 
+defold.SysMessages.Reboot = (function() 
   local _hx_17
   
-  local this1 = _G.hash("trigger_response");
+  local this1 = _G.hash("reboot");
   
   _hx_17 = this1;
   return _hx_17
 end )()
-defold.DefoldMessages.SpineAnimationDone = (function() 
+defold.SysMessages.SetUpdateFrequency = (function() 
   local _hx_18
   
-  local this1 = _G.hash("spine_animation_done");
+  local this1 = _G.hash("set_update_frequency");
   
   _hx_18 = this1;
   return _hx_18
 end )()
-defold.DefoldMessages.SpineEvent = (function() 
+defold.SysMessages.StartRecord = (function() 
   local _hx_19
   
-  local this1 = _G.hash("spine_event");
+  local this1 = _G.hash("start_record");
   
   _hx_19 = this1;
   return _hx_19
 end )()
-defold.DefoldMessages.AcquireCameraFocus = (function() 
+defold.SysMessages.StopRecord = (function() 
   local _hx_20
   
-  local this1 = _G.hash("acquire_camera_focus");
+  local this1 = _G.hash("stop_record");
   
   _hx_20 = this1;
   return _hx_20
 end )()
-defold.DefoldMessages.ReleaseCameraFocus = (function() 
+defold.SysMessages.ToggleProfile = (function() 
   local _hx_21
   
-  local this1 = _G.hash("release_camera_focus");
+  local this1 = _G.hash("toggle_profile");
   
   _hx_21 = this1;
   return _hx_21
-end )()
-defold.DefoldMessages.SetCamera = (function() 
-  local _hx_22
-  
-  local this1 = _G.hash("set_camera");
-  
-  _hx_22 = this1;
-  return _hx_22
-end )()
-defold.DefoldMessages.ClearColor = (function() 
-  local _hx_23
-  
-  local this1 = _G.hash("clear_color");
-  
-  _hx_23 = this1;
-  return _hx_23
-end )()
-defold.DefoldMessages.DrawLine = (function() 
-  local _hx_24
-  
-  local this1 = _G.hash("draw_line");
-  
-  _hx_24 = this1;
-  return _hx_24
-end )()
-defold.DefoldMessages.DrawText = (function() 
-  local _hx_25
-  
-  local this1 = _G.hash("draw_text");
-  
-  _hx_25 = this1;
-  return _hx_25
-end )()
-defold.DefoldMessages.WindowResized = (function() 
-  local _hx_26
-  
-  local this1 = _G.hash("window_resized");
-  
-  _hx_26 = this1;
-  return _hx_26
-end )()
-defold.DefoldMessages.AnimationDone = (function() 
-  local _hx_27
-  
-  local this1 = _G.hash("animation_done");
-  
-  _hx_27 = this1;
-  return _hx_27
-end )()
-defold.DefoldMessages.PlayAnimation = (function() 
-  local _hx_28
-  
-  local this1 = _G.hash("play_animation");
-  
-  _hx_28 = this1;
-  return _hx_28
-end )()
-defold.DefoldMessages.PlaySound = (function() 
-  local _hx_29
-  
-  local this1 = _G.hash("play_sound");
-  
-  _hx_29 = this1;
-  return _hx_29
-end )()
-defold.DefoldMessages.SetGain = (function() 
-  local _hx_30
-  
-  local this1 = _G.hash("set_gain");
-  
-  _hx_30 = this1;
-  return _hx_30
-end )()
-defold.DefoldMessages.StopSound = (function() 
-  local _hx_31
-  
-  local this1 = _G.hash("stop_sound");
-  
-  _hx_31 = this1;
-  return _hx_31
-end )()
-defold.DefoldMessages.SetTile = (function() 
-  local _hx_32
-  
-  local this1 = _G.hash("set_tile");
-  
-  _hx_32 = this1;
-  return _hx_32
 end )()
 lua.Boot.hiddenFields = _hx_tab_array({[0]="__id__", "hx__closures", "super", "prototype", "__fields__", "__ifields__", "__class__", "__properties__" }, 8)
 do
