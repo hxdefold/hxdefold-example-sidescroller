@@ -17,7 +17,7 @@ class Spaceship extends defold.support.Script<SpaceshipData> {
 
         // Animate the ship so it's swaying back and forth
         Go.set(".", "euler.z", -5);
-        Go.animate(".", "euler.z", PLAYBACK_LOOP_PINGPONG, 5, Easing.EASING_INOUTSINE, 2);
+        Go.animate(".", "euler.z", PLAYBACK_LOOP_PINGPONG, 5, GoEasing.EASING_INOUTSINE, 2);
     }
 
     override function update(data:SpaceshipData, dt:Float) {
