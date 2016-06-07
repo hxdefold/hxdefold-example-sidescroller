@@ -1787,6 +1787,78 @@ defold.DefoldMessages.ClearColor = (function()
   _hx_23 = this1;
   return _hx_23
 end )()
+defold.DefoldMessages.DrawLine = (function() 
+  local _hx_24
+  
+  local this1 = _G.hash("draw_line");
+  
+  _hx_24 = this1;
+  return _hx_24
+end )()
+defold.DefoldMessages.DrawText = (function() 
+  local _hx_25
+  
+  local this1 = _G.hash("draw_text");
+  
+  _hx_25 = this1;
+  return _hx_25
+end )()
+defold.DefoldMessages.WindowResized = (function() 
+  local _hx_26
+  
+  local this1 = _G.hash("window_resized");
+  
+  _hx_26 = this1;
+  return _hx_26
+end )()
+defold.DefoldMessages.AnimationDone = (function() 
+  local _hx_27
+  
+  local this1 = _G.hash("animation_done");
+  
+  _hx_27 = this1;
+  return _hx_27
+end )()
+defold.DefoldMessages.PlayAnimation = (function() 
+  local _hx_28
+  
+  local this1 = _G.hash("play_animation");
+  
+  _hx_28 = this1;
+  return _hx_28
+end )()
+defold.DefoldMessages.PlaySound = (function() 
+  local _hx_29
+  
+  local this1 = _G.hash("play_sound");
+  
+  _hx_29 = this1;
+  return _hx_29
+end )()
+defold.DefoldMessages.SetGain = (function() 
+  local _hx_30
+  
+  local this1 = _G.hash("set_gain");
+  
+  _hx_30 = this1;
+  return _hx_30
+end )()
+defold.DefoldMessages.StopSound = (function() 
+  local _hx_31
+  
+  local this1 = _G.hash("stop_sound");
+  
+  _hx_31 = this1;
+  return _hx_31
+end )()
+defold.DefoldMessages.SetTile = (function() 
+  local _hx_32
+  
+  local this1 = _G.hash("set_tile");
+  
+  _hx_32 = this1;
+  return _hx_32
+end )()
 lua.Boot.hiddenFields = _hx_tab_array({[0]="__id__", "hx__closures", "super", "prototype", "__fields__", "__ifields__", "__class__", "__properties__" }, 8)
 do
 

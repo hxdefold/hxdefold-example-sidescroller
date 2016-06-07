@@ -1,10 +1,10 @@
 package gui;
 
-import defold.Gui.GuiEasing;
+import defold.Gui;
 
 private typedef Data = {
     var score:Int;
-    var score_node:Node;
+    var score_node:GuiNode;
 }
 
 class Main extends defold.support.GuiScript<Data> {
@@ -13,7 +13,7 @@ class Main extends defold.support.GuiScript<Data> {
         data.score_node = Gui.get_node("score");
     }
 
-    function scale_down(data:Data, node:Node) {
+    function scale_down(data:Data, node:GuiNode) {
         var s = 1.0;
         Gui.animate(node, Gui.PROP_SCALE, Vmath.vector4(s, s, s, 0), EASING_OUT, 0.05);
     }
