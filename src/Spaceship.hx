@@ -11,7 +11,7 @@ class Spaceship extends Script<SpaceshipData> {
 
     override function init(data:SpaceshipData) {
         // Let the script receive input from the player
-        Msg.post(".", GoMessages.AcquireInputFocus);
+        Msg.post(".", GoMessages.acquire_input_focus);
         // the current speed of the space ship
         data.speed = 0;
 
