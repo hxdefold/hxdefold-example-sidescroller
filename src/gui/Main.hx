@@ -1,6 +1,6 @@
 package gui;
 
-import defold.Gui;
+using defold.Gui;
 
 private typedef Data = {
     var score:Int;
@@ -15,7 +15,7 @@ class Main extends defold.support.GuiScript<Data> {
 
     function scale_down(data:Data, node:GuiNode) {
         var s = 1.0;
-        Gui.animate(node, Gui.PROP_SCALE, Vmath.vector4(s, s, s, 0), EASING_OUT, 0.05);
+        node.animate(Gui.PROP_SCALE, Vmath.vector4(s, s, s, 0), EASING_OUT, 0.05);
     }
 
     override function on_message<T>(data:Data, message_id:Message<T>, message:T, sender:Url) {
@@ -23,8 +23,8 @@ class Main extends defold.support.GuiScript<Data> {
             case Messages.AddScore:
                 var s = 1.2;
                 data.score += message.amount;
-                Gui.set_text(data.score_node, Std.string(data.score));
-                Gui.animate(data.score_node, Gui.PROP_SCALE, Vmath.vector4(s, s, s, 0), EASING_OUT, 0.1, 0.0, scale_down);
+                data.score_node.set_text(Std.string(data.score));
+                data.score_node.animate(Gui.PROP_SCALE, Vmath.vector4(s, s, s, 0), EASING_OUT, 0.1, 0.0, scale_down);
         }
     }
 }
