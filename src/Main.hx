@@ -1,4 +1,5 @@
 import defold.support.Script;
+import defold.support.ScriptOnInputAction;
 
 class Main extends Script<{}> {
     override function init(_) {
