@@ -3,7 +3,7 @@ import defold.support.Script;
 class Main extends Script<{}> {
     override function init(_) {
         // set blue background
-        Msg.post("@render:", RenderMessages.ClearColor, {color: Vmath.vector4(0.52, 0.80, 1, 0)});
+        Msg.post("@render:", RenderMessages.clear_color, {color: Vmath.vector4(0.52, 0.80, 1, 0)});
         Msg.post(".", GoMessages.acquire_input_focus);
     }
 

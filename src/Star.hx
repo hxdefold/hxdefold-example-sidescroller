@@ -12,7 +12,7 @@ class Star extends defold.support.Script<{}> {
 
     override function on_message<T>(_, message_id:Message<T>, message:T, sender:Url) {
         switch (message_id) {
-            case PhysicsMessages.CollisionResponse:
+            case PhysicsMessages.collision_response:
                 Msg.post("main#gui", Messages.AddScore, {amount: score});
                 Go.delete();
         }
