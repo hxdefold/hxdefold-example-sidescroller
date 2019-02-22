@@ -5,3 +5,4 @@
 --macro include("", true, null, ["src"])
 --macro defold.support.ScriptMacro.use(".")
 -D luajit
+-D lua-vanilla
